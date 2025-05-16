@@ -2,6 +2,7 @@ Step 1: Para rodar no android use:
 npm run android
 
 Como usar
+
 Conecte um dispositivo Bluetooth para reconhecimento facial.
 
 Use o app para tirar a foto.
