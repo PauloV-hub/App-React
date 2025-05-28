@@ -1,5 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
+<<<<<<< HEAD
 import { View, Text, Button, TouchableOpacity, StyleSheet, Image, Alert } from 'react-native';
+=======
+import { View, Text, Button, StyleSheet, Image, Alert } from 'react-native';
+>>>>>>> 10e256de878adb94c37bfe48b1236c52f6fa0f1f
 import { Camera, useCameraDevice, useCameraPermission } from 'react-native-vision-camera';
 import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
 import type { RootStackParamList } from '../App'; // o tipo do seu navigator principal
@@ -13,7 +17,11 @@ export default function CameraScreen(): React.JSX.Element {
 
     const route = useRoute<CameraScreenRouteProp>();
 
+<<<<<<< HEAD
     const { deviceInfo } = route.params;
+=======
+    const { dispositivo } = route.params;
+>>>>>>> 10e256de878adb94c37bfe48b1236c52f6fa0f1f
 
     const { hasPermission, requestPermission } = useCameraPermission();
     const device = useCameraDevice('front');
@@ -21,6 +29,7 @@ export default function CameraScreen(): React.JSX.Element {
     const [photoUri, setPhotoUri] = useState<string | null>(null);
 
     useEffect(() => {
+<<<<<<< HEAD
         const checkPermission = async () => {
             if (!hasPermission) {
                 await requestPermission();
@@ -33,6 +42,13 @@ export default function CameraScreen(): React.JSX.Element {
         setPhotoUri(null);
     }, []);
 
+=======
+        if (!hasPermission) {
+            requestPermission();
+        }
+    }, [hasPermission, requestPermission]);
+
+>>>>>>> 10e256de878adb94c37bfe48b1236c52f6fa0f1f
     if (!device) {
         return <Text>Nenhuma câmera disponível</Text>;
     }
@@ -40,13 +56,21 @@ export default function CameraScreen(): React.JSX.Element {
     if (!hasPermission) {
         return (
             <View style={styles.container}>
+<<<<<<< HEAD
                 <Text>Permissão de câmera não concedida.</Text>
                 <Button title="Tentar Novamente" onPress={requestPermission} />
+=======
+                <Text>Permissão de câmera não concedida</Text>
+                <Button title="Permitir Câmera" onPress={requestPermission} />
+>>>>>>> 10e256de878adb94c37bfe48b1236c52f6fa0f1f
             </View>
         );
     }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 10e256de878adb94c37bfe48b1236c52f6fa0f1f
     async function takePhoto() {
         if (camera.current == null) return;
 
@@ -54,12 +78,16 @@ export default function CameraScreen(): React.JSX.Element {
             const photo = await camera.current.takePhoto();
             setPhotoUri('file://' + photo.path);
 
+<<<<<<< HEAD
             navigation.navigate('Media', {
                 path: photo.path, deviceInfo: {
                     address: deviceInfo.address,
                     name: deviceInfo.name,
                 },
             });
+=======
+            navigation.navigate('Media', { path: photo.path, device: dispositivo });
+>>>>>>> 10e256de878adb94c37bfe48b1236c52f6fa0f1f
         } catch (error) {
             console.error('Erro ao tirar foto:', error);
         }
@@ -75,12 +103,24 @@ export default function CameraScreen(): React.JSX.Element {
                 photo={true}
             />
             <View style={styles.buttonContainer}>
+<<<<<<< HEAD
                 <TouchableOpacity onPress={takePhoto} style={styles.cameraButton}>
                     <View style={styles.outerCircle}>
                         <View style={styles.innerCircle} />
                     </View>
                 </TouchableOpacity>
             </View>
+=======
+                <Button title="Tirar Foto" onPress={takePhoto} />
+            </View>
+
+            {photoUri && (
+                <View style={styles.preview}>
+                    <Text>Foto capturada:</Text>
+                    <Image source={{ uri: photoUri }} style={styles.photo} />
+                </View>
+            )}
+>>>>>>> 10e256de878adb94c37bfe48b1236c52f6fa0f1f
         </View>
     );
 }
@@ -91,6 +131,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
+<<<<<<< HEAD
 
     buttonContainer: {
         position: 'absolute', // Geralmente o botão da câmera fica sobre a visualização da câmera
@@ -121,6 +162,12 @@ const styles = StyleSheet.create({
         height: 50,
         borderRadius: 25,
         backgroundColor: 'white',
+=======
+    buttonContainer: {
+        position: 'absolute',
+        bottom: 50,
+        alignSelf: 'center',
+>>>>>>> 10e256de878adb94c37bfe48b1236c52f6fa0f1f
     },
     preview: {
         position: 'absolute',
