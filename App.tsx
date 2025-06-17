@@ -42,6 +42,7 @@ export type RootStackParamList = {
     imageUri: string;
     processedImage: string;
     similarity: string;
+    isLive: boolean;
     deviceInfo: { name: string; address: string };
   };
 };

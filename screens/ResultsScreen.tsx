@@ -24,7 +24,7 @@ function ResultsScreen(): React.JSX.Element {
     const isDarkMode = useColorScheme() === 'dark';
     const navigation = useNavigation<ResultadosScreenNavigationProp>();
     const route = useRoute<ResultadosScreenRouteProp>();
-    const { imageUri, similarity, deviceInfo } = route.params;
+    const { imageUri, similarity, isLive, deviceInfo } = route.params;
     const similarityValue = parseFloat(similarity);
 
     const backgroundStyle = {
@@ -85,10 +85,17 @@ function ResultsScreen(): React.JSX.Element {
                             shadowRadius: 12,
                             width: '100%',
                         }}>
-                        <Image
-                            source={require('../assets/Frieren_Himmel.png')}
-                            style={[styles.icon, { marginBottom: 0 }]}
-                        />
+                        {similarityValue > 0.8 ? (
+                            <Image
+                                source={require('../assets/fubuki.png')}
+                                style={[styles.icon, { marginBottom: 0 }]}
+                            />
+                        ) : (
+                            <Image
+                                source={require('../assets/Frieren_Himmel.png')}
+                                style={[styles.icon, { marginBottom: 0 }]}
+                            />
+                        )}
                         <Text style={[styles.similarity, { color: isDarkMode ? Colors.light : Colors.dark }]}>
                             Similaridade: {(similarityValue * 100).toFixed(2)}%
                         </Text>
@@ -97,7 +104,7 @@ function ResultsScreen(): React.JSX.Element {
 
 
 
-                    {similarityValue > 0.8 ? (
+                    {similarityValue > 0.8 && isLive === true ? (
                         <>
                             <Text style={[styles.message, { color: isDarkMode ? Colors.light : Colors.dark }]}>
                                 ✅ Você foi reconhecido!
@@ -115,6 +122,10 @@ function ResultsScreen(): React.JSX.Element {
                                 <Text style={styles.buttonText}>Abrir Fechadura</Text>
                             </TouchableOpacity>
                         </>
+                    ) : isLive === false ? (
+                        <Text style={[styles.message, { color: isDarkMode ? Colors.light : Colors.dark }]}>
+                            ❌ Fraude detectada!
+                        </Text>
                     ) : (
                         <Text style={[styles.message, { color: isDarkMode ? Colors.light : Colors.dark }]}>
                             ❌ Não reconhecido!
@@ -128,8 +139,8 @@ function ResultsScreen(): React.JSX.Element {
 
 const styles = StyleSheet.create({
     icon: {
-        width: 200,
-        height: 200,
+        width: 270,
+        height: 270,
         marginVertical: 20,
         resizeMode: 'contain',
     },
